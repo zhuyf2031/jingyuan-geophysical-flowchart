@@ -1,0 +1,22 @@
+# 大文件
+*.pdf
+*.xls
+*.xlsx
+
+# 生成的图片
+*.jpg
+*.svg
+*.png
+
+# 临时文件
+*.prn
+*_hd2007.txt
+generate-svg.html
+render-svg.js
+
+# Claude
+.claude/
+
+# 系统文件
+desktop.ini
+Thumbs.db

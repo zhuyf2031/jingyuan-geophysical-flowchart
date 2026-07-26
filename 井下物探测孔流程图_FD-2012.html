@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>井下物探测孔作业流程图 - FD-2012 深浅孔测孔仪</title>
+    <script src="mermaid.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #ffffff;
+            font-family: "Microsoft YaHei", "微软雅黑", "SimSun", "宋体", sans-serif;
+            color: #000000;
+            padding: 16px;
+        }
+        .container { max-width: 100%; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 10px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 6px;
+        }
+        .header h1 { font-size: 18px; font-weight: bold; margin-bottom: 2px; }
+        .header .subtitle { font-size: 12px; color: #333; }
+        .header .info { font-size: 10px; color: #666; }
+        .mermaid { display: flex; justify-content: center; background: #ffffff; overflow-x: auto; }
+        .footer {
+            text-align: center;
+            margin-top: 10px;
+            padding-top: 6px;
+            border-top: 1px solid #ccc;
+            font-size: 10px;
+            color: #999;
+        }
+        .edit-notice {
+            background: #fffde7;
+            border: 1px solid #ffe082;
+            padding: 6px 10px;
+            margin: 8px auto;
+            max-width: 700px;
+            font-size: 11px;
+            text-align: center;
+            border-radius: 3px;
+        }
+        .edit-notice button {
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 0 2px;
+        }
+        .warn-box {
+            background: #fff5f5;
+            border: 1px solid #ffaaaa;
+            padding: 6px 10px;
+            margin: 6px auto;
+            max-width: 700px;
+            font-size: 11px;
+            text-align: center;
+            border-radius: 3px;
+            color: #cc0000;
+            font-weight: bold;
+        }
+        @media print {
+            @page { size: A4 landscape; margin: 6mm; }
+            body { padding: 0; }
+            .edit-notice, .warn-box, .footer { display: none; }
+            .header { border-bottom: 1px solid #000; padding-bottom: 4px; margin-bottom: 6px; }
+            .header h1 { font-size: 14px; }
+            .container { max-width: 100%; }
+            .mermaid { max-width: 100%; overflow: hidden; }
+            .mermaid svg { max-width: 100%; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>井下物探测孔作业指导书流程图</h1>
+            <div class="subtitle">仪器：FD-2012 深浅孔测孔仪 | 文件编号：ZHJY-501-ZY-006</div>
+            <div class="info">编制单位：中核韶关锦原铀业有限公司 · 五〇一矿</div>
+        </div>
+
+        <div class="edit-notice">
+            💡 <strong>修改方式：</strong>用记事本打开，搜索 <code>flowchart LR</code> 定位流程图代码，修改后保存刷新。 &nbsp;
+            <button onclick="downloadSVG()">📥 下载SVG</button>
+            <button onclick="downloadJPG()">📥 下载JPG</button>
+            <button onclick="window.print()">🖨 直接打印</button>
+        </div>
+
+        <div class="warn-box">
+            ⚠ 安全警告：向外抽取接杆及探头时，不可直接拉扯连接线，避免仪器损坏！
+        </div>
+
+        <div class="mermaid">
+flowchart LR
+    A([作业开始]) --> B
+
+    subgraph S1["一 作业前 仪器检查准备"]
+        direction TB
+        B[领取仪器与配件<br/>FD-2012主机 探头 接杆 连接线 记录本]
+        B1[检查外观 连接线无破损<br/>接杆螺纹无滑丝 安装电池]
+        B2[开机预热1至2分钟 自检通过<br/>确认测量模式与矿区一致]
+        C[标准源校准<br/>探头紧贴标准源 待读数稳定后记录示值]
+        D{示值与标准值偏差≤10%?}
+        D1[记录校准数据 日期 人员 仪器编号<br/>标准源编号 偏差值 结论]
+        D2[检查参数与电池 重新校准一次]
+        B --> B1 --> B2 --> C --> D
+        D -->|是 偏差≤10%| D1
+        D -->|否 偏差>10%| D2 --> D
+    end
+
+    subgraph S2["二 作业中 规范测量操作"]
+        direction TB
+        E[到达测孔作业面<br/>确认通风合格 顶板边邦稳固]
+        F[填写记录表头 连接延长接杆<br/>逐节拧紧 探头与连接线对接好]
+        G[仪器开机 确认工作电压<br/>稳慢下放探头至孔底 避免碰撞孔壁]
+        H[逐段向上测量 每段停留至读数稳定<br/>记录测段深度 编号 γ辐射读数]
+        I{该段γ值增高<br/>且未加密?}
+        I2[加密至段距10至20cm<br/>详细圈定异常范围]
+        J[正常段距0.5至1m继续<br/>逐节抽取接杆及探头<br/>⚠动作稳慢 禁止拉连接线]
+        L{全孔测量完成?}
+        M[现场数据整理<br/>检查记录完整性 有无漏段 读数不清]
+        E --> F --> G --> H --> I
+        I -->|是 增高且未加密| I2 --> H
+        I -->|否 正常或已加密| J --> L
+        L -->|否 继续测量| H
+        L -->|是 本孔完成| M
+    end
+
+    subgraph S3["三 作业后 回收保养"]
+        direction TB
+        N[关机并拆卸全部接杆<br/>分离探头与连接线 湿布清除探头表面污染物]
+        O[清洁仪器及各部件表面<br/>检查接杆螺纹 连接线有无磨损]
+        P[返回地表实验室<br/>用标准源进行一致性检测]
+        Q{检测读数与作业前校准偏差≤10%?}
+        Q1[记录一致性合格 仪器正常<br/>接杆归整捆扎 仪器归位 电池充电]
+        Q2[标注仪器状态异常<br/>报告管理人员安排检修]
+        R[数据导出与交接<br/>测量记录交地质技术员 完成数据入库]
+        S([作业完成])
+        N --> O --> P --> Q
+        Q -->|是 偏差≤10%| Q1 --> R
+        Q -->|否 偏差>10%| Q2 --> R
+        R --> S
+    end
+
+    D1 --> E
+    M --> N
+
+    classDef startEnd fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    classDef process fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+    classDef decision fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+    classDef subproc fill:#fafafa,stroke:#000000,stroke-width:1px,color:#000000
+    classDef warnNode fill:#fff5f5,stroke:#cc0000,stroke-width:2px,color:#cc0000
+
+    class A,S startEnd
+    class B,B1,B2,C,D1,E,F,G,H,I2,M,N,O,P,Q1,Q2,R process
+    class D,I,L,Q decision
+    class D2 subproc
+    class J warnNode
+        </div>
+
+        <div class="footer">
+            <p>本流程图依据《物探测孔作业指导书（五〇一矿）》及 FD-2012 使用说明书编制 | 版本：V6 紧凑三列布局 | A4横打一页</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                primaryTextColor: '#000000',
+                primaryBorderColor: '#000000',
+                lineColor: '#000000',
+                secondaryColor: '#ffffff',
+                tertiaryColor: '#ffffff',
+                fontSize: '11px'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis',
+                nodeSpacing: 22,
+                rankSpacing: 32
+            }
+        });
+
+        function downloadSVG() {
+            var svg = document.querySelector('.mermaid svg');
+            if (!svg) {
+                alert('流程图尚未渲染完成，请稍等再试');
+                return;
+            }
+            var clone = svg.cloneNode(true);
+            clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            var style = document.createElement('style');
+            style.textContent = 'text{font-family:"Microsoft YaHei","SimSun",sans-serif} .edgeLabel span{font-family:"Microsoft YaHei","SimSun",sans-serif}';
+            clone.insertBefore(style, clone.firstChild);
+            var svgData = new XMLSerializer().serializeToString(clone);
+            var blob = new Blob([svgData], {type: 'image/svg+xml'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = '井下物探测孔流程图_FD-2012.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadJPG() {
+            var svg = document.querySelector('.mermaid svg');
+            if (!svg) {
+                alert('流程图尚未渲染完成，请稍等再试');
+                return;
+            }
+            var box = svg.getBoundingClientRect();
+            var w = box.width || 1600;
+            var h = box.height || 900;
+            var scale = 3;
+            var clone = svg.cloneNode(true);
+            clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            clone.setAttribute('width', w * scale);
+            clone.setAttribute('height', h * scale);
+            var svgData = new XMLSerializer().serializeToString(clone);
+            var svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+            var url = URL.createObjectURL(svgBlob);
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = w * scale;
+                canvas.height = h * scale;
+                var ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob(function(blob) {
+                    var jpgUrl = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = jpgUrl;
+                    a.download = '井下物探测孔流程图_FD-2012.jpg';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(jpgUrl);
+                }, 'image/jpeg', 0.95);
+                URL.revokeObjectURL(url);
+            };
+            img.src = url;
+        }
+    </script>
+</body>
+</html>

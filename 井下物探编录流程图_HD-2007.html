@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>井下物探编录作业流程图 - HD-2007 γ定向辐射仪</title>
+    <script src="mermaid.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #ffffff;
+            font-family: "Microsoft YaHei", "微软雅黑", "SimSun", "宋体", sans-serif;
+            color: #000000;
+            padding: 20px;
+        }
+        .container { max-width: 100%; margin: 0 auto; }
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+        }
+        .header h1 { font-size: 20px; font-weight: bold; margin-bottom: 4px; }
+        .header .subtitle { font-size: 13px; color: #333; }
+        .header .info { font-size: 11px; color: #666; margin-top: 4px; }
+        .mermaid { display: flex; justify-content: center; background: #ffffff; overflow-x: auto; }
+        .footer {
+            text-align: center;
+            margin-top: 15px;
+            padding-top: 8px;
+            border-top: 1px solid #ccc;
+            font-size: 11px;
+            color: #999;
+        }
+        .edit-notice {
+            background: #fffde7;
+            border: 1px solid #ffe082;
+            padding: 8px 12px;
+            margin: 10px auto;
+            max-width: 550px;
+            font-size: 11px;
+            text-align: center;
+            border-radius: 3px;
+        }
+        @media print {
+            @page { size: A4 landscape; margin: 8mm; }
+            body { padding: 0; }
+            .edit-notice, .footer { display: none; }
+            .header { border-bottom: 1px solid #000; padding-bottom: 6px; margin-bottom: 8px; }
+            .header h1 { font-size: 16px; }
+            .container { max-width: 100%; }
+            .mermaid { max-width: 100%; overflow: hidden; }
+            .mermaid svg { max-width: 100%; height: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>井下物探编录作业指导书流程图</h1>
+            <div class="subtitle">仪器：HD-2007 γ定向辐射仪 | 文件编号：ZHJY-501-ZY-006</div>
+            <div class="info">编制单位：中核韶关锦原铀业有限公司 · 五〇一矿</div>
+        </div>
+
+        <div class="edit-notice">
+            💡 <strong>修改方式：</strong>用记事本打开本文件，搜索 <code>flowchart LR</code> 定位到流程图代码，修改后保存并刷新浏览器即可。 &nbsp;
+            <button onclick="downloadSVG()" style="padding:4px 12px;cursor:pointer;font-size:12px;">📥 下载SVG</button>
+            <button onclick="downloadJPG()" style="padding:4px 12px;cursor:pointer;font-size:12px;">📥 下载JPG</button>
+            <button onclick="window.print()" style="padding:4px 12px;cursor:pointer;font-size:12px;">🖨 直接打印</button>
+        </div>
+
+        <div class="mermaid">
+flowchart LR
+    A([作业开始]) --> B
+
+    subgraph S1["一 作业前 仪器检查准备"]
+        direction TB
+        B[领取仪器与配件<br/>HD-2007主机 探头 延长杆<br/>铅屏 喷漆 记录本]
+        B1[检查仪器外观是否完好<br/>探头连接线无破损<br/>配件是否齐全]
+        B2[安装电池<br/>确认电量充足<br/>电压指示在正常范围]
+        B3[开机预热1至2分钟<br/>仪器自检通过]
+        B4[检查相关参数<br/>确认参数与矿区设定一致]
+        C[取出标准源<br/>确认标准源编号与标定值]
+        C1[将标准源置于探测器<br/>规定位置紧贴探头]
+        C2[待读数稳定后<br/>读取并记录仪器示值]
+        D{示值与标准值偏差}
+        D1[记录校准数据于记录本<br/>日期 人员 仪器编号<br/>标准源编号 偏差值 结论]
+        D2[检查系数<br/>重新校准一次]
+        B --> B1 --> B2 --> B3 --> B4 --> C --> C1 --> C2 --> D
+        D -->|偏差小于等于10%| D1
+        D -->|偏差大于10%| D2 --> D
+    end
+
+    subgraph S2["二 作业中 规范测量操作"]
+        direction TB
+        E[到达编录作业面<br/>确认通风合格 顶板边邦稳固]
+        F[填写作业记录表头<br/>日期 地点 作业人员<br/>仪器型号HD-2007 仪器编号<br/>现场线号]
+        F1[确定测量参数<br/>测量方向 东到西<br/>测网网度 0.2m乘2m]
+        F2[布设测量基线<br/>沿基线按网度标定测点<br/>用喷漆标记测点位置]
+        G[开机确认工作电压正常]
+        H[逐点测量操作<br/>探头紧贴岩矿石面]
+        H1[每点停留至读数稳定<br/>记录测点编号 位置<br/>γ辐射读数 其他描述]
+        I{该测点附近<br/>γ值明显增高?}
+        I1{是否已加密?}
+        I2[加密至点距10至20cm<br/>详细圈定异常范围]
+        J[正常场按点距0.2m<br/>继续下一测点]
+        K{全部测点完成?}
+        L[现场数据整理<br/>检查记录是否完整<br/>有无漏点 读数不清之处]
+        E --> F --> F1 --> F2 --> G --> H --> H1 --> I
+        I -->|是| I1
+        I1 -->|否| I2 --> H
+        I1 -->|是| J
+        I -->|否| J
+        J --> K
+        K -->|否| H
+        K -->|是| L
+    end
+
+    subgraph S3["三 作业后 回收保养"]
+        direction TB
+        M[关机<br/>用湿布清除探测器<br/>表面放射性污染物]
+        N[清洁仪器表面<br/>检查外观有无损坏松动]
+        N1[返回地表值班室<br/>用标准源进行<br/>一致性检测]
+        O{检测读数与<br/>作业前校准偏差?}
+        O1[记录一致性合格<br/>仪器正常]
+        O2[标注仪器状态异常<br/>报告管理人员安排检修]
+        P[配件归位摆放整齐<br/>仪器放回指定存放处<br/>充电]
+        Q[数据导出与交接<br/>将测量记录交物探技术员<br/>完成数据入库]
+        R([作业完成])
+        M --> N --> N1 --> O
+        O -->|偏差小于等于10%| O1 --> P
+        O -->|偏差大于10%| O2 --> P
+        P --> Q --> R
+    end
+
+    D1 --> E
+    L --> M
+
+    classDef startEnd fill:#ffffff,stroke:#000000,stroke-width:2px,color:#000000
+    classDef process fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+    classDef decision fill:#ffffff,stroke:#000000,stroke-width:1.5px,color:#000000
+    classDef subproc fill:#fafafa,stroke:#000000,stroke-width:1px,color:#000000
+
+    class A,R startEnd
+    class B,B1,B2,B3,B4,C,C1,C2,D1,E,F,F1,F2,G,H,H1,I2,J,L,M,N,N1,O1,O2,P,Q process
+    class D,I,I1,K,O decision
+    class D2 subproc
+        </div>
+
+        <div class="footer">
+            <p>本流程图依据《物探编录作业指导书（五〇一矿）》及 HD-2007 使用说明书编制 | 版本：V2 初版修订 | 白底黑字可编辑</p>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                primaryTextColor: '#000000',
+                primaryBorderColor: '#000000',
+                lineColor: '#000000',
+                secondaryColor: '#ffffff',
+                tertiaryColor: '#ffffff',
+                fontSize: '13px'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis',
+                nodeSpacing: 35,
+                rankSpacing: 45
+            }
+        });
+
+        function downloadSVG() {
+            var svg = document.querySelector('.mermaid svg');
+            if (!svg) {
+                alert('流程图尚未渲染完成，请稍等再试');
+                return;
+            }
+            var clone = svg.cloneNode(true);
+            clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            var style = document.createElement('style');
+            style.textContent = 'text{font-family:"Microsoft YaHei","SimSun",sans-serif} .edgeLabel span{font-family:"Microsoft YaHei","SimSun",sans-serif}';
+            clone.insertBefore(style, clone.firstChild);
+            var svgData = new XMLSerializer().serializeToString(clone);
+            var blob = new Blob([svgData], {type: 'image/svg+xml'});
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = '井下物探编录流程图_HD-2007.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function downloadJPG() {
+            var svg = document.querySelector('.mermaid svg');
+            if (!svg) {
+                alert('流程图尚未渲染完成，请稍等再试');
+                return;
+            }
+            // Get SVG dimensions
+            var box = svg.getBoundingClientRect();
+            var w = box.width || 1200;
+            var h = box.height || 2000;
+            var scale = 3; // 3x for high quality
+            var clone = svg.cloneNode(true);
+            clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+            clone.setAttribute('width', w * scale);
+            clone.setAttribute('height', h * scale);
+            var svgData = new XMLSerializer().serializeToString(clone);
+            var svgBlob = new Blob([svgData], {type: 'image/svg+xml;charset=utf-8'});
+            var url = URL.createObjectURL(svgBlob);
+            var img = new Image();
+            img.onload = function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = w * scale;
+                canvas.height = h * scale;
+                var ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                canvas.toBlob(function(blob) {
+                    var jpgUrl = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = jpgUrl;
+                    a.download = '井下物探编录流程图_HD-2007.jpg';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(jpgUrl);
+                }, 'image/jpeg', 0.95);
+                URL.revokeObjectURL(url);
+            };
+            img.src = url;
+        }
+    </script>
+</body>
+</html>
