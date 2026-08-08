@@ -29,9 +29,7 @@
         /* ===== 密码门禁 ===== */
         #pwOverlay {
             position: fixed;
-            top: 0; left: 0;
-            width: 100vw;
-            height: 100vh;
+            inset: 0;
             z-index: 9999;
             background: #ffffff;
             display: flex;
@@ -86,9 +84,9 @@
         }
         .pw-box button:hover { background: #333; }
 
-        /* ===== 主内容区（始终保持可见，Mermaid需要在可见DOM中渲染） ===== */
-        #mainContent { }
-        #mainContent.unlocked { }
+        /* ===== 主内容区 ===== */
+        #mainContent { display: none; }
+        #mainContent.unlocked { display: block; }
 
         /* ===== 顶部导航 ===== */
         .topbar {
@@ -229,75 +227,6 @@
             color: #999;
         }
 
-        /* ===== 图片预览弹窗（手机端长按保存） ===== */
-        #previewModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 10001;
-            background: rgba(0,0,0,0.92);
-        }
-        #previewModal.show { display: block; }
-        #previewModal .preview-close {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.9);
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            z-index: 2;
-            line-height: 36px;
-            text-align: center;
-            color: #333;
-        }
-        #previewModal .preview-dl-btn {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            padding: 8px 18px;
-            background: rgba(255,255,255,0.9);
-            border: none;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            z-index: 2;
-            font-family: inherit;
-            color: #333;
-            font-weight: bold;
-        }
-        #previewModal .preview-hint {
-            position: absolute;
-            bottom: 28px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
-            font-size: 14px;
-            text-align: center;
-            z-index: 2;
-            background: rgba(0,0,0,0.5);
-            padding: 8px 20px;
-            border-radius: 20px;
-            pointer-events: none;
-        }
-        #previewModal .preview-img-wrap {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            max-width: 96%;
-            max-height: 88%;
-        }
-        #previewModal .preview-img-wrap img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            background: #fff;
-        }
-
         /* ===== 回到顶部 ===== */
         .back-to-top {
             position: fixed;
@@ -413,11 +342,11 @@ flowchart TD
 
     subgraph S1["一 作业前 仪器检查准备"]
         direction TB
-        B[检查仪器与配件<br/>HD-2007主机 探头 延长杆<br/>显示屏 喷漆 记录本]
+        B[领取仪器与配件<br/>HD-2007主机 探头 延长杆<br/>铅屏 喷漆 记录本]
         B1[检查仪器外观是否完好<br/>探头连接线无破损<br/>配件是否齐全]
-        B2[检查电池<br/>确认电量充足<br/>电压指示在正常范围]
+        B2[安装电池<br/>确认电量充足<br/>电压指示在正常范围]
         B3[开机预热1至2分钟<br/>仪器自检通过]
-        B4[检查相关参数<br/>确认参数与设定一致]
+        B4[检查相关参数<br/>确认参数与矿区设定一致]
         C[取出标准源<br/>确认标准源编号与标定值]
         C1[将标准源置于探测器<br/>规定位置紧贴探头]
         C2[待读数稳定后<br/>读取并记录仪器示值]
@@ -439,11 +368,15 @@ flowchart TD
         H[逐点测量操作<br/>探头紧贴岩矿石面]
         H1[每点停留至读数稳定<br/>记录测点编号 位置<br/>γ辐射读数 其他描述]
         I{该测点附近<br/>γ值明显增高?}
+        I1{是否已加密?}
+        I2[加密至点距10至20cm<br/>详细圈定异常范围]
         J[正常场按点距0.2m<br/>继续下一测点]
         K{全部测点完成?}
         L[现场数据整理<br/>检查记录是否完整<br/>有无漏点 读数不清之处]
         E --> F --> F1 --> F2 --> G --> H --> H1 --> I
-        I -->|是 记录异常| J
+        I -->|是| I1
+        I1 -->|否| I2 --> H
+        I1 -->|是| J
         I -->|否| J
         J --> K
         K -->|否| H
@@ -476,8 +409,8 @@ flowchart TD
     classDef subproc fill:#fafafa,stroke:#000000,stroke-width:1px,color:#000000
 
     class A,R startEnd
-    class B,B1,B2,B3,B4,C,C1,C2,D1,E,F,F1,F2,G,H,H1,J,L,M,N,N1,O1,O2,P,Q process
-    class D,I,K,O decision
+    class B,B1,B2,B3,B4,C,C1,C2,D1,E,F,F1,F2,G,H,H1,I2,J,L,M,N,N1,O1,O2,P,Q process
+    class D,I,I1,K,O decision
     class D2 subproc
                     </div>
                 </div>
@@ -509,8 +442,8 @@ flowchart TD
 
     subgraph S1["一 作业前 仪器检查准备"]
         direction TB
-        B[检查仪器与配件<br/>FD-2012主机 探头<br/>接杆 连接线 记录本]
-        B1[检查外观 连接线无破损<br/>接杆螺纹无滑丝<br/>检查电池 确认电量充足]
+        B[领取仪器与配件<br/>FD-2012主机 探头<br/>接杆 连接线 记录本]
+        B1[检查外观 连接线无破损<br/>接杆螺纹无滑丝<br/>安装电池 确认电量充足]
         B2[开机预热1至2分钟<br/>仪器自检通过<br/>确认测量模式与矿区一致]
         C[标准源校准<br/>探头紧贴标准源规定位置<br/>待读数稳定后记录示值]
         D{示值与标准值偏差}
@@ -527,14 +460,14 @@ flowchart TD
         F[填写作业记录表头<br/>日期 时间 地点 作业人员<br/>仪器型号FD-2012 仪器编号<br/>钻孔编号]
         F1[连接延长接杆<br/>逐节拧紧 确保连接牢固<br/>探头与连接线对接好]
         G[仪器开机<br/>确认工作电压正常]
-        H[将探头稳慢放入钻孔<br/>逐节连接接杆<br/>避免碰撞孔壁]
-        H1[到达目标深度后<br/>逐段测量<br/>每段停留至读数稳定]
+        H[将探头稳慢放入钻孔<br/>逐节下放接杆<br/>避免碰撞孔壁]
+        H1[到达目标深度后<br/>逐段向上测量<br/>每段停留至读数稳定]
         H2[记录测段深度 编号<br/>γ辐射读数]
         I{该段γ值<br/>明显增高?}
         I1{是否已加密?}
-        I2[加密至段距至20cm<br/>详细圈定异常范围]
+        I2[加密至段距10至20cm<br/>详细圈定异常范围]
         J[正常段按段距0.5至1m<br/>继续下一测段]
-        K[向外抽取接杆及探头<br/>逐节拆卸接杆<br/>⚠动作稳慢 禁止猛拉连接线]
+        K[向外抽取接杆及探头<br/>逐节拆卸接杆<br/>⚠动作稳慢 禁止拉连接线]
         L{全孔测量完成?}
         M[现场数据整理<br/>检查记录是否完整<br/>有无漏段 读数不清之处]
         E --> F --> F1 --> G --> H --> H1 --> H2 --> I
@@ -555,8 +488,8 @@ flowchart TD
         P{检测读数与<br/>作业前校准偏差?}
         P1[记录一致性合格<br/>仪器正常]
         P2[标注仪器状态异常<br/>报告管理人员<br/>安排检修]
-        Q[接杆归整捆扎<br/>仪器及各部件归位存放<br/>电池充电]
-        R[数据导出与交接<br/>将测量记录交物探技术员<br/>完成数据入库]
+        Q[接杆归整捆扎<br/>仪器及各部件归位存放<br/>电池取出充电]
+        R[数据导出与交接<br/>将测量记录交地质技术员<br/>完成数据入库]
         S([作业完成])
         N --> N1 --> O --> P
         P -->|偏差小于等于10%| P1 --> Q
@@ -593,57 +526,23 @@ flowchart TD
         <a href="#" class="back-to-top" title="回到顶部">↑</a>
     </div><!-- /mainContent -->
 
-    <!-- ==================== 图片预览弹窗（手机端长按保存） ==================== -->
-    <div id="previewModal">
-        <button class="preview-dl-btn" id="previewDlBtn" onclick="forceDownload()">💾 下载</button>
-        <button class="preview-close" onclick="closePreview()">✕</button>
-        <div class="preview-img-wrap">
-            <img id="previewImg" src="" alt="流程图预览" />
-        </div>
-        <div class="preview-hint">👆 长按上方图片 → 保存到相册</div>
-    </div>
-
     <script>
-        /* 预览相关全局变量 */
-        var _previewBlob = null;
-        var _previewFilename = '';
-
-        function closePreview() {
-            document.getElementById('previewModal').classList.remove('show');
-            if (_previewBlob) { URL.revokeObjectURL(_previewBlob); _previewBlob = null; }
-        }
-
-        function forceDownload() {
-            if (!_previewBlob) return;
-            var a = document.createElement('a');
-            a.href = URL.createObjectURL(_previewBlob);
-            a.download = _previewFilename;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-        }
-
         /* ===== 密码门禁 ===== */
         (function() {
             var CORRECT_PW = '501';
-            var overlay = document.getElementById('pwOverlay');
-
-            // 检查是否已通过验证（sessionStorage 关闭标签页后清除）
-            // try-catch 兼容手机隐私模式
-            try {
-                if (sessionStorage.getItem('wutan_auth') === '1') {
-                    overlay.classList.add('hidden');
-                }
-            } catch(e) {
-                // sessionStorage 不可用（隐私模式），忽略
+            // 检查是否已通过验证（sessionStorage 在关闭标签页后清除）
+            if (sessionStorage.getItem('wutan_auth') === '1') {
+                document.getElementById('pwOverlay').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('unlocked');
             }
 
             window.checkPassword = function() {
                 var input = document.getElementById('pwInput');
                 var error = document.getElementById('pwError');
                 if (input.value.trim() === CORRECT_PW) {
-                    try { sessionStorage.setItem('wutan_auth', '1'); } catch(e) {}
-                    overlay.classList.add('hidden');
+                    sessionStorage.setItem('wutan_auth', '1');
+                    document.getElementById('pwOverlay').classList.add('hidden');
+                    document.getElementById('mainContent').classList.add('unlocked');
                     error.textContent = '';
                 } else {
                     error.textContent = '密码错误，请重新输入';
@@ -661,21 +560,34 @@ flowchart TD
             document.getElementById('pwInput').focus();
         })();
 
-        /* ===== 下载工具函数（必须在 mermaid 之前定义，防止初始化报错导致函数未定义） ===== */
+        /* ===== Mermaid 初始化 ===== */
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            themeVariables: {
+                primaryColor: '#ffffff',
+                primaryTextColor: '#000000',
+                primaryBorderColor: '#000000',
+                lineColor: '#000000',
+                secondaryColor: '#ffffff',
+                tertiaryColor: '#ffffff',
+                fontSize: '13px'
+            },
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis',
+                nodeSpacing: 30,
+                rankSpacing: 40
+            }
+        });
 
-        function showToast(msg) {
-            var t = document.createElement('div');
-            t.textContent = msg;
-            t.style.cssText = 'position:fixed;bottom:40px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 24px;border-radius:20px;font-size:14px;z-index:99999;pointer-events:none;font-family:"Microsoft YaHei","PingFang SC",sans-serif;';
-            document.body.appendChild(t);
-            setTimeout(function(){ t.remove(); }, 2000);
-        }
-
+        /* ===== 下载 SVG ===== */
         function downloadSVG(mermaidId, filename) {
             var container = document.getElementById(mermaidId);
-            if (!container) { showToast('未找到流程图'); return; }
+            if (!container) return;
             var svg = container.querySelector('svg');
-            if (!svg) { showToast('图表加载中，请稍等再试'); return; }
+            if (!svg) { alert('流程图尚未渲染完成，请稍等再试'); return; }
             var clone = svg.cloneNode(true);
             clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
             var style = document.createElement('style');
@@ -683,14 +595,20 @@ flowchart TD
             clone.insertBefore(style, clone.firstChild);
             var svgData = new XMLSerializer().serializeToString(clone);
             var blob = new Blob([svgData], {type: 'image/svg+xml'});
-            downloadBlob(blob, filename);
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
+        /* ===== 下载 JPG ===== */
         function downloadJPG(mermaidId, filename) {
             var container = document.getElementById(mermaidId);
-            if (!container) { showToast('未找到流程图'); return; }
+            if (!container) return;
             var svg = container.querySelector('svg');
-            if (!svg) { showToast('图表加载中，请稍等再试'); return; }
+            if (!svg) { alert('流程图尚未渲染完成，请稍等再试'); return; }
             var box = svg.getBoundingClientRect();
             var w = box.width || 900;
             var h = box.height || 1600;
@@ -712,45 +630,23 @@ flowchart TD
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                 canvas.toBlob(function(blob) {
-                    downloadBlob(blob, filename);
+                    var jpgUrl = URL.createObjectURL(blob);
+                    var a = document.createElement('a');
+                    a.href = jpgUrl; a.download = filename;
+                    document.body.appendChild(a); a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(jpgUrl);
                 }, 'image/jpeg', 0.95);
                 URL.revokeObjectURL(url);
             };
-            img.onerror = function() { showToast('图片生成失败，请重试'); };
             img.src = url;
         }
 
-        /* 通用下载：桌面端触发下载，手机端新窗口打开供长按保存 */
-        function downloadBlob(blob, filename) {
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = filename;
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-
-            // 手机端兜底：300ms 后如果还在同一页面，打开新窗口
-            setTimeout(function() {
-                if (document.body.contains(a)) {
-                    document.body.removeChild(a);
-                    window.open(url, '_blank');
-                    showToast('请长按图片保存到相册');
-                }
-            }, 300);
-            // 正常情况下去掉元素
-            setTimeout(function() {
-                if (document.body.contains(a)) document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            }, 1000);
-        }
-
-        /* 打印 */
+        /* ===== 打印单个区块 ===== */
         function printSection(sectionId) {
             var section = document.getElementById(sectionId);
-            if (!section) { showToast('未找到打印内容'); return; }
+            if (!section) return;
             var win = window.open('', '_blank', 'width=900,height=800');
-            if (!win) { showToast('请允许弹出窗口后重试'); return; }
             win.document.write('<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><title>打印</title><style>');
             win.document.write('@page{size:A4;margin:8mm}');
             win.document.write('*{margin:0;padding:0;box-sizing:border-box}');
@@ -767,33 +663,6 @@ flowchart TD
             win.document.write('</body></html>');
             win.document.close();
             setTimeout(function(){ win.print(); win.close(); }, 500);
-        }
-
-        /* ===== Mermaid 初始化（try-catch 防止渲染异常阻断下载功能） ===== */
-        try {
-            mermaid.initialize({
-                startOnLoad: true,
-                theme: 'neutral',
-                themeVariables: {
-                    primaryColor: '#ffffff',
-                    primaryTextColor: '#000000',
-                    primaryBorderColor: '#000000',
-                    lineColor: '#000000',
-                    secondaryColor: '#ffffff',
-                    tertiaryColor: '#ffffff',
-                    fontSize: '13px'
-                },
-                flowchart: {
-                    useMaxWidth: true,
-                    htmlLabels: true,
-                    curve: 'basis',
-                    nodeSpacing: 30,
-                    rankSpacing: 40
-                }
-            });
-        } catch(e) {
-            console.error('Mermaid init error:', e);
-            showToast('图表加载异常，请刷新重试');
         }
     </script>
 </body>
